@@ -197,17 +197,17 @@ async def read_file(file_path: str) -> dict[str, str]:
         return {"file_content": file.read()}
 
 
-# if __name__ == "__main__":
-#     # Use this for debugging purposes only
-#     import uvicorn
+if __name__ == "__main__":
+    # Use this for debugging purposes only
+    import uvicorn
 
-# uvicorn.run(
-#        "pain: app",  # Module and app name
-#        host="0.0.0.0",# Host address
-#        port=8000, # Port number
-#        log_level="debug", # Logging Level
-#        reload=True, # Enable auto-reload on code changes
-# )
+uvicorn.run(
+    "pain: app",  # Module and app name
+    host="0.0.0.0",  # Host address
+    port=8000,  # Port number
+    log_level="debug",  # Logging Level
+    reload=True,  # Enable auto-reload on code changes
+)
 
 
 #
