@@ -14,6 +14,13 @@ class VideoCategory(str, Enum):
     MUSIC = "music"
 
 
+# Enum for sorting options to restrict sort_by parameter to specific fields
+class SortBy(str, Enum):
+    item_name = "name"
+    price = "price"
+    category = "category"
+
+
 class Video(BaseModel):
     id: int
     title: str = Field(
