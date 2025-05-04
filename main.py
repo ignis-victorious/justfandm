@@ -2,7 +2,7 @@
 #  ___________________
 #  Import LIBRARIES
 from fastapi import FastAPI, HTTPException, Depends, status
-from typing import List
+from typing import Any
 from datetime import datetime, timezone
 from uuid import UUID, uuid4
 
@@ -45,11 +45,11 @@ async def get_current_user(user_id: UUID) -> UserBase:
 
 ################ Users Endpoints ################
 @app.post("/users/", response_model=UserBase, status_code=status.HTTP_201_CREATED)
-async def create_user(user: UserCreate):
-    user_id = uuid4()
-    current_time = datetime.now(timezone.utc)
+async def create_user(user: UserCreate) -> dict[str, Any]:
+    user_id: UUID = uuid4()
+    current_time: datetime = datetime.now(timezone.utc)
 
-    new_user = {
+    new_user: dict[str, Any] = {
         "id": user_id,
         "username": user.username,
         "email": user.email,
@@ -66,16 +66,16 @@ async def create_user(user: UserCreate):
     return new_user
 
 
-@app.get("/users/", response_model=List[UserBase])
-async def get_users():
+@app.get("/users/", response_model=list[UserBase])
+async def get_users() -> list[UserBase]:
     return list(db["users"].values())
 
 
 @app.get("/users/{user_id}", response_model=User)
-async def get_user(user_id: UUID):
+async def get_user(user_id: UUID) -> User:
     if user_id not in db["users"]:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not  found"
         )
     return db["users"][user_id]
 
@@ -84,11 +84,11 @@ async def get_user(user_id: UUID):
 @app.post("/users/{user_id}/posts/", response_model=Post)
 async def create_post(
     user_id: UUID, post: PostCreate, current_user: UserBase = Depends(get_current_user)
-):
-    post_id = uuid4()
-    current_time = datetime.now(timezone.utc)
+) -> dict[str, Any]:
+    post_id: UUID = uuid4()
+    current_time: datetime = datetime.now(timezone.utc)
 
-    new_post = {
+    new_post: dict[str, Any] = {
         "id": post_id,
         "title": post.title,
         "content": post.content,
@@ -105,13 +105,13 @@ async def create_post(
     return new_post
 
 
-@app.get("/posts/", response_model=List[Post])
-async def get_posts():
+@app.get("/posts/", response_model=list[Post])
+async def get_posts() -> list[Post]:
     return list(db["posts"].values())
 
 
 @app.get("/posts/{post_id}", response_model=Post)
-async def get_post(post_id: UUID):
+async def get_post(post_id: UUID) -> Post:
     if post_id not in db["posts"]:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Post not found"
@@ -125,14 +125,14 @@ async def create_comment(
     post_id: UUID,
     comment: CommentCreate,
     current_user: UserBase = Depends(get_current_user),
-):
+) -> dict[str, Any]:
     if post_id not in db["posts"]:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Post not found"
         )
 
-    comment_id = uuid4()
-    current_time = datetime.now(timezone.utc)
+    comment_id: UUID = uuid4()
+    current_time: datetime = datetime.now(timezone.utc)
 
     new_comment = {
         "id": comment_id,
@@ -150,8 +150,8 @@ async def create_comment(
     return new_comment
 
 
-@app.get("/posts/{post_id}/comments/", response_model=List[Comment])
-async def get_post_comments(post_id: UUID):
+@app.get("/posts/{post_id}/comments/", response_model=list[Comment])
+async def get_post_comments(post_id: UUID) -> list[Comment]:
     if post_id not in db["posts"]:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Post not found"
