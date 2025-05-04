@@ -1,48 +1,35 @@
 <html>
 
 <head>
-    <title>Video API Usage</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #333333;
-            color: white;
-
-            /*color: gray;*/
-        }
-
-        h1 {
-            color: white;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            margin: 10px 0;
-        }
-
-        a {
-            text-decoration: none;
-            color: lightblue;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <title>Blog API</title>
 </head>
 
 <body>
-    <h1>Welcome to Another FastAPI Crash Course</h1>
-    <h2> </h2>
-    <h2>Incidentally - SQLModel is also part of this Course</h2>
-    <h2> </h2>
-    <h2>Enjoy!!!</h2>
+    <h1>Welcome to the Blog API</h1>
+    <p>Check the <a href="/docs">API documentation</a> for more information.</p>
 
+    <h2>Endpoints</h2>
+
+    <h3>Users</h3>
+    <ul>
+        <li><a href="/users/">Get all users</a></li>
+        <li><a href="/users/{user_id}">Get user by ID</a></li>
+        <li><a href="/users/">Create a new user</a></li>
+    </ul>
+
+
+    <h3>Posts</h3>
+    <ul>
+        <li><a href="/posts/">Get all posts</a></li>
+        <li><a href="/posts/{post_id}">Get post by ID</a></li>
+        <li><a href="/users/{user_id}/posts/">Create a new post</a></li>
+    </ul>
+
+    <h3>Comments</h3>
+    <ul>
+        <li><a href="/posts/{post_id}/comments/">Get all comments for a post</a></li>
+        <li><a href="/posts/{post_id}/comments/">Create a new comment</a></li>
+    </ul>
 </body>
 
 </html>
